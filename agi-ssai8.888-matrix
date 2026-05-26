@@ -1,0 +1,94 @@
+<body>
+    <!-- Фоновые элементы -->
+    <div class="matrix-bg"></div>
+    <canvas id="matrix"></canvas>
+
+    <!-- Шапка сайта -->
+    <header>
+        <div class="logo">OSIRYS<span>.AI</span></div>
+        <div class="subtitle">Матричный ИИ-портал / Cyberpunk Interface</div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <!-- Блок статуса ИИ -->
+        <div class="block">
+            <div class="block-title">// СТАТУС СИСТЕМЫ</div>
+            <div class="ai-status">Ядро OSIRYS: <span>ОНЛАЙН</span></div>
+            <div class="ai-status">Синхронизация данных: <span>100%</span></div>
+        </div>
+
+        <!-- Блок генерации идей -->
+        <div class="block">
+            <div class="block-title">// ИНИЦИАЦИЯ ПРОЕКТА</div>
+            <label for="project-input">Опишите вашу идею или задачу:</label>
+            <textarea id="project-input" class="input" placeholder="Введите параметры запроса..."></textarea>
+            <a href="#" class="btn" id="generate-btn">Отправить в матрицу</a>
+        </div>
+
+        <!-- Лента / Комментарии -->
+        <div class="block">
+            <div class="block-title">// ПОСЛЕДНИЕ ЛОГИ</div>
+            <div class="comment">
+                <strong>Пользователь_404:</strong> Тестирую терминал. Скорость отклика ИИ впечатляет.
+            </div>
+            <div class="comment">
+                <strong>Система:</strong> Обнаружено новое подключение из сектора 7.
+            </div>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer>
+        OSIRYS OS v4.2.6 // Создано под управлением <span class="god-mark">GOD_MARK</span>
+    </footer>
+
+    <!-- Скрипт для анимации Матричного Дождя -->
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        // Подгонка холста под размер экрана
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Символы для дождя (цифры и катакана)
+        const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ10';
+        const alphabet = katakana.split('');
+
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+
+        function draw() {
+            // Эффект затухания для шлейфа
+            ctx.fillStyle = 'rgba(0, 8, 20, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Цвет падающих символов (подстраиваем под ваш #00ff9d)
+            ctx.fillStyle = '#00ff9d';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+
+        // Частота кадров анимации
+        setInterval(draw, 30);
+    </script>
+</body>
